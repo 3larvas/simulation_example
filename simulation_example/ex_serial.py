@@ -163,7 +163,7 @@ class rawProtocal(Protocol):
         return self.running
 
 # 포트 설정 ############################## 값 변경하는 곳
-PORT = 'COM3'
+PORT = 'COM2'
 # 연결
 ser = serial.serial_for_url(PORT, baudrate=115200, timeout=1)
 

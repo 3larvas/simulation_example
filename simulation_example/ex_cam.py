@@ -2,7 +2,6 @@ import socket
 import cv2
 import numpy as np
 import time
-from lidar_util import get_lidar, visualize_lidar_img, transform_lidar2cam
 from cam_util import get_img
 
 params_cam = {
@@ -42,7 +41,9 @@ def main():
         t_s1 = time.time()
         img_cam = get_img(UDP_cam, params_cam)
 
-        cv2.imshow('Result', cv2.resize(img_cam, (params_cam["WIDTH"], params_cam["HEIGHT"]), interpolation=cv2.INTER_LINEAR))
+        cv2.imshow('Result', cv2.resize(img_cam, (int(params_cam["WIDTH"]/2), int(params_cam["HEIGHT"]/2)), interpolation=cv2.INTER_LINEAR))
+        # cv2.imshow('Result',img_cam)
+
         cv2.waitKey(1)
 
     UDP_cam.close()
