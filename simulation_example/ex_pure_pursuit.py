@@ -9,14 +9,14 @@ import numpy as np
 
 from time import sleep
 
-ser = serial.Serial('/dev/ttyUSB1',115200)
+# ser = serial.Serial('/dev/ttyUSB1',115200)
 
 # Parameters
 k = 0.1  # look forward gain
-Lfc = 4.0  # [m] look-ahead distance
+Lfc = 3.0  # [m] look-ahead distance
 Kp = 1.0  # speed proportional gain
 dt = 0.05  # [s] time tick
-WB = 0.9  # [m] wheel base of vehicle
+WB = 0.5  # [m] wheel base of vehicle
 
 
 show_animation = True
@@ -175,11 +175,11 @@ def serWrite(v, d):
 	data=[]
     # 제어패킷 생성
 	writeBuffer(data, v, d)
-    print(v)
-    print(d)
+    # print(v)
+    # print(d)
     # 제어패킷 전송
 	#print(data)
-	ser.write(data)
+	# ser.write(data)
 	cv2.waitKey(25)
 
 def writeBuffer(data, speed, steering):
@@ -245,7 +245,7 @@ def main():
         time += dt
         states.append(time, state)
         ## -------------------- 시리얼 통신 -------------------- ##
-	    print("di" , di)
+	    # print("di" , di)
         # 제어패킷 전송
         # state.v * 3.6 = km/h 변환
         # * 10 값은 제어패킷 속도값(0~800)에 맞추기위한 임의의 상수 값, 추후 변환표를 보고 수정필요
@@ -253,10 +253,10 @@ def main():
         # 1500 -(di*700) 값은 제어패킷 조향값(1200~1500~1900)에 맞추기 위한 임의의 상소, 추후 변환표를 보고 수정필요
         serWrite(int(state.v * 3.6 * 10), 1500-int(di * 700))
         # 패킷 간 딜레이 설정
-        sleep(0.05)
+        # sleep(0.05)
         ## -------------------------------#-------------------- ##
         # 움직이는 과정을 그래프 상에 표현, 실제 주행 명령 패킷 전송시 주석처리
-        '''
+
         if show_animation:  # pragma: no cover
             plt.cla()
             # for stopping simulation with the esc key.
@@ -271,7 +271,7 @@ def main():
             plt.grid(True)
             plt.title("Speed[km/h]:" + str(state.v * 3.6)[:4])
             plt.pause(0.00001)
-        '''
+
     # Test
     assert lastIndex >= target_ind, "Cannot goal"
 
@@ -291,7 +291,6 @@ def main():
         plt.ylabel("Speed[km/h]")
         plt.grid(True)
         plt.show()
-
 
 if __name__ == '__main__':
     print("Pure pursuit path tracking simulation start")
