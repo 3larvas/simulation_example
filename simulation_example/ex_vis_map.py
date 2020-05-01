@@ -15,5 +15,5 @@ for i in range(h):
             arr_map[i][j] = 0
 
 
-cv2.waitKey(0) 
+cv2.waitKey(0)
 cv2.destroyAllWindows()
